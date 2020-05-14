@@ -23,6 +23,7 @@ public class CarController {
      */
     @GetMapping("findAll")
     public JSONResult findAll() {
+        System.out.println("111111111111111111111111111111111");
         List<Car> cars = carService.findAll();
         return JSONResult.ok(cars);
     }
