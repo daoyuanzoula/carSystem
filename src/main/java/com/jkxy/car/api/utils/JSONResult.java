@@ -33,6 +33,10 @@ public class JSONResult {
         return new JSONResult(null);
     }
 
+    public static JSONResult nok() {
+        return new JSONResult(0);
+    }
+
     public static JSONResult errorMsg(String msg) {
         return new JSONResult(500, msg, null);
     }
@@ -63,6 +67,12 @@ public class JSONResult {
         this.status = 200;
         this.msg = "OK";
         this.data = data;
+    }
+
+    public JSONResult(int i) {
+        this.status = 0;
+        this.msg = "NOK, Car is none";
+        this.data = null;
     }
 
     public Boolean isOK() {

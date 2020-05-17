@@ -1,5 +1,7 @@
 package com.jkxy.car.api.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jkxy.car.api.pojo.Car;
 import com.jkxy.car.api.service.CarService;
 import com.jkxy.car.api.utils.JSONResult;
@@ -23,7 +25,7 @@ public class CarController {
      */
     @GetMapping("findAll")
     public JSONResult findAll() {
-        System.out.println("111111111111111111111111111111111");
+        //System.out.println("111111111111111111111111111111111");
         List<Car> cars = carService.findAll();
         return JSONResult.ok(cars);
     }
@@ -71,6 +73,7 @@ public class CarController {
      */
     @PostMapping("updateById")
     public JSONResult updateById(Car car) {
+        
         carService.updateById(car);
         return JSONResult.ok();
     }
@@ -85,5 +88,38 @@ public class CarController {
     public JSONResult insertCar(Car car) {
         carService.insertCar(car);
         return JSONResult.ok();
+    }
+
+    /**
+     * 买车
+     *
+     * @return
+     */
+    @PostMapping("buyCar/{id}")
+    public JSONResult buyCar(@PathVariable int id) {
+        Car car = carService.findById(id);
+        if (car.getNum() > 0){
+            carService.buyCar(car);
+            return JSONResult.ok();
+        } else {
+            System.out.println("11111111111111111");
+            return JSONResult.nok();
+        }
+
+    }
+
+    /**
+     * 模糊查询
+     *
+     * @return
+     */
+    @PostMapping("fuzzFind")
+    public JSONResult fuzzFind(@RequestParam String carName,@RequestParam int pageNum,@RequestParam int pageSize) {
+        carName="%"+carName+"%";
+        PageHelper.startPage(pageNum, pageSize);
+        List<Car> cars = carService.fuzzFind(carName);
+        PageInfo info = new PageInfo(cars);
+        return JSONResult.ok(info);
+
     }
 }

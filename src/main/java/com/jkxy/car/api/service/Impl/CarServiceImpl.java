@@ -1,6 +1,8 @@
 package com.jkxy.car.api.service.Impl;
 
+import com.jkxy.car.api.dao.BuyCar;
 import com.jkxy.car.api.dao.CarDao;
+import com.jkxy.car.api.dao.FuzzFind;
 import com.jkxy.car.api.pojo.Car;
 import com.jkxy.car.api.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,10 @@ import java.util.List;
 public class CarServiceImpl implements CarService {
     @Autowired
     private CarDao carDao;
+    @Autowired
+    private BuyCar buyCar;
+    @Autowired
+    private FuzzFind fuzzFind;
 
     @Override
     public List<Car> findAll() {
@@ -42,5 +48,15 @@ public class CarServiceImpl implements CarService {
     @Override
     public void insertCar(Car car) {
         carDao.insertCar(car);
+    }
+
+    @Override
+    public void buyCar(Car car) {
+        buyCar.buyCar(car);
+    }
+
+    @Override
+    public List<Car> fuzzFind(String carName) {
+        return fuzzFind.fuzzFind(carName);
     }
 }
