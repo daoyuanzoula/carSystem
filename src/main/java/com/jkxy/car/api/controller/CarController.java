@@ -98,7 +98,7 @@ public class CarController {
     @PostMapping("buyCar")
     public JSONResult buyCar(@RequestParam int id, @RequestParam int buyNum ) {
         Car car = carService.findById(id);
-        if (car.getNum() > 0 && car.getNum() > buyNum){
+        if (car.getNum() > 0 && car.getNum() >= buyNum){
             carService.buyCar(car);
             return JSONResult.ok();
         } else {
